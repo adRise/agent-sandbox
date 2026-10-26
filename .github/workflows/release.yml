@@ -32,6 +32,13 @@ jobs:
       new_tag: ${{ steps.set-tag.outputs.new_tag || steps.auto-tag.outputs.new_tag }}
 
     steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          use-policy-store: true
+          egress-policy: audit
+          api-key: ${{ secrets.STEP_SECURITY_API_KEY }}
+
       - name: Checkout agent-sandbox
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
         with:
@@ -85,6 +92,13 @@ jobs:
       new_tag: ${{ needs.tag-release.outputs.new_tag }}
 
     steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          use-policy-store: true
+          egress-policy: audit
+          api-key: ${{ secrets.STEP_SECURITY_API_KEY }}
+
       - name: Checkout agent-sandbox
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
         with:
@@ -163,6 +177,13 @@ jobs:
     timeout-minutes: ${{ fromJSON(github.event.inputs.poll_timeout_mins || '360') > 360 && 360 || fromJSON(github.event.inputs.poll_timeout_mins || '360') }}
 
     steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          use-policy-store: true
+          egress-policy: audit
+          api-key: ${{ secrets.STEP_SECURITY_API_KEY }}
+
       - name: Wait for PR Merge
         env:
           # Use a Fine-Grained PAT scoped to kubernetes/k8s.io with contents:write and pull_requests:write
@@ -208,6 +229,13 @@ jobs:
     environment: release
 
     steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          use-policy-store: true
+          egress-policy: audit
+          api-key: ${{ secrets.STEP_SECURITY_API_KEY }}
+
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
         with:
